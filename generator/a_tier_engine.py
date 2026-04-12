@@ -66,7 +66,7 @@ class ATierEngine:
         lows = np.minimum(opens, synthetic_prices) * (1.0 - vol * 0.4 - 0.0005)
         
         df = pd.DataFrame({
-            'open_time': np.arange(length) * 3600000,
+            'open_time': np.arange(length) * 900000,
             'open': opens,
             'high': highs,
             'low': lows,
