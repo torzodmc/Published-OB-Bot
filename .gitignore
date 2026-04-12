@@ -1,0 +1,6 @@
+input_data/*.csv
+test_results.txt
+utf8_results.txt
+new_test_utf8.txt
+__pycache__/
+*.pyc
