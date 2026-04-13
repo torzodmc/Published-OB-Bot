@@ -1,5 +1,4 @@
-**Here are clean, properly formatted tables for all 4 models.**  
-I’ve kept the exact original data and numbers — no changes, just much easier to read.
+**Chance of each model wining prop firm challenges and more info**
 
 ---
 
