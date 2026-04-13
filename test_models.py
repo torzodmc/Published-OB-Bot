@@ -73,11 +73,8 @@ def extract_trades_vectorized(df_raw, multipliers):
                 active_obs.append({'type':'bearish', 'top':Highs[idx_max], 'bot':Lows[idx_max], 'age':0, 'vol_surge':v_s, 'fvg':f})
             last_sl = None
 
-        new_active = []
         for ob in active_obs:
             ob['age'] += 1
-            if ob['age'] < 150: new_active.append(ob)
-        active_obs = new_active
         
         atr = ATRs[i]
         if pd.isna(atr) or atr == 0: continue
@@ -91,6 +88,11 @@ def extract_trades_vectorized(df_raw, multipliers):
                     
         for hit_ob in hit_obs:
             if hit_ob in active_obs: active_obs.remove(hit_ob)
+
+        new_active = []
+        for ob in active_obs:
+            if ob['age'] < 150: new_active.append(ob)
+        active_obs = new_active
         
         for ob in hit_obs:
             ep = ob['top'] if ob['type'] == 'bullish' else ob['bot']
@@ -121,7 +123,7 @@ def extract_trades_vectorized(df_raw, multipliers):
             tr = {
                 'Date': Dates[i], 'ob_age': ob['age'], 'atr': atr, 'rsi': RSIs[i-1],
                 'ob_width_atr': ob_width / atr, 'ob_bos_vol_surge': ob['vol_surge'],
-                'ob_has_fvg': ob['fvg'], 'mit_vol_surge': Vols[i-1] / vol_base,
+                'ob_has_fvg': ob['fvg'], 'mit_vol_surge': Vols[i] / vol_base,
                 'dist_ema_50': (Closes[i-1] - EMA50[i-1]) / atr, 
                 'dist_ema_200': (Closes[i-1] - EMA200[i-1]) / atr,
                 'mtf_aligned': 1 if (1 if EMA50[i-1] > EMA200[i-1] else -1) == (1 if ob['type'] == 'bullish' else -1) else 0,
